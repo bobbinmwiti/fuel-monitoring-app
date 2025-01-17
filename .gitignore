@@ -1,0 +1,16 @@
+ECHO is on.
+# Flutter
+.dart_tool/
+.idea/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+ios/Pods/
+.DS_Store
+
+# Logs
+*.log
+
+# System files
+.vscode/
