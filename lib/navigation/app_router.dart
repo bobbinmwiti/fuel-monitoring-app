@@ -1,8 +1,13 @@
 // lib/navigation/app_router.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../features/auth/screens/login_screen.dart';
 import '../features/auth/screens/signup_screen.dart';
 import '../features/auth/screens/email_verification_screen.dart';
+import '../features/dashboard/screens/dashboard_screen.dart';
+import '../features/dashboard/bloc/dashboard_bloc.dart';
+import '../data/repositories/vehicle_repository.dart';
+import '../data/repositories/fuel_record_repository.dart';
 
 class AppRouter {
   // Route names
@@ -36,10 +41,13 @@ class AppRouter {
         );
 
       case dashboard:
-        // TODO: Add Dashboard screen when implemented
         return MaterialPageRoute(
-          builder: (_) => const Scaffold(
-            body: Center(child: Text('Dashboard Screen')),
+          builder: (context) => BlocProvider(
+            create: (context) => DashboardBloc(
+              vehicleRepository: VehicleRepository(),
+              fuelRecordRepository: FuelRecordRepository(),
+            ),
+            child: const DashboardScreen(),
           ),
         );
 
