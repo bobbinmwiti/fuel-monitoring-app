@@ -1,5 +1,7 @@
 // lib/features/auth/screens/email_verification_screen.dart
+
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/theme/app_colors.dart';
@@ -22,14 +24,30 @@ class EmailVerificationScreen extends StatefulWidget {
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   late Timer _timer;
+  late Timer _verificationTimer;
   int _timeLeft = 60;
   bool _canResendEmail = false;
+  late ScaffoldMessengerState _scaffoldMessenger;
+  final auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     super.initState();
     _startTimer();
     _checkEmailVerification();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _scaffoldMessenger = ScaffoldMessenger.of(context);
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _verificationTimer.cancel();
+    super.dispose();
   }
 
   void _startTimer() {
@@ -47,15 +65,68 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     });
   }
 
+  Future<void> _resendVerificationEmail() async {
+    try {
+      final user = auth.currentUser;
+      if (user != null && !user.emailVerified) {
+        await user.sendEmailVerification();
+        
+        if (!mounted) return;
+        
+        setState(() {
+          _canResendEmail = false;
+          _timeLeft = 60;
+        });
+        _startTimer();
+        
+        _scaffoldMessenger.showSnackBar(
+          const SnackBar(
+            content: Text('Verification email sent successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      
+      _scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Text('Failed to send verification email: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   void _checkEmailVerification() {
-    Timer.periodic(const Duration(seconds: 3), (timer) async {
-      // TODO: Check if email is verified
-      // If verified:
-      // timer.cancel();
-      // if (mounted) {
-      //   Navigator.of(context).pushReplacementNamed('/dashboard');
-      // }
-    });
+    _verificationTimer = Timer.periodic(
+      const Duration(seconds: 3),
+      (timer) async {
+        try {
+          final user = auth.currentUser;
+          if (user != null) {
+            await user.reload();
+            
+            if (!mounted) return;
+            
+            if (user.emailVerified) {
+              timer.cancel();
+              context.read<AuthBloc>().add(const EmailVerifiedEvent());
+              Navigator.of(context).pushReplacementNamed('/dashboard');
+            }
+          }
+        } catch (e) {
+          if (!mounted) return;
+          
+          _scaffoldMessenger.showSnackBar(
+            SnackBar(
+              content: Text('Error verifying email: ${e.toString()}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -136,16 +207,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               const SizedBox(height: 32),
               CustomButton(
                 text: 'Resend Email',
-                onPressed: _canResendEmail
-                    ? () {
-                        // TODO: Implement resend email
-                        setState(() {
-                          _canResendEmail = false;
-                          _timeLeft = 60;
-                        });
-                        _startTimer();
-                      }
-                    : null,
+                onPressed: _canResendEmail ? _resendVerificationEmail : null,
                 isOutlined: true,
               ),
               const SizedBox(height: 16),
@@ -161,11 +223,5 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
   }
 }
