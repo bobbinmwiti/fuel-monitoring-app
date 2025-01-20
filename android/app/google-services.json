@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "656311448145",
+    "project_id": "iot-fuel-monitoring-app",
+    "storage_bucket": "iot-fuel-monitoring-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656311448145:android:1ec338fe2cd986f482be70",
+        "android_client_info": {
+          "package_name": "com.example.fuel_monitoring_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXHv4haUCGhlWd41B3AHmO2AcUVV3uCWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656311448145:android:312172c3787744dc82be70",
+        "android_client_info": {
+          "package_name": "com.example.my_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXHv4haUCGhlWd41B3AHmO2AcUVV3uCWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
