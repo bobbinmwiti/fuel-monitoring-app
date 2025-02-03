@@ -141,9 +141,9 @@ class FuelRecordRepository {
           .toList();
 
       final totalFuel = records.fold<double>(
-          0, (sum, record) => sum + record.fuelAmount);
+          0, (previousValue, record) => previousValue + record.fuelAmount);
       final totalCost = records.fold<double>(
-          0, (sum, record) => sum + record.totalCost);
+          0, (previousValue, record) => previousValue + record.totalCost);
 
       return {
         'totalFuel': totalFuel,

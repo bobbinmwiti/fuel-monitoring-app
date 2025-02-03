@@ -1,13 +1,10 @@
 // lib/features/dashboard/bloc/dashboard_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fuel_monitoring_app/data/repositories/fuel_record_repository.dart';
-import 'package:fuel_monitoring_app/features/dashboard/bloc/dashboard_event.dart';
-import 'package:fuel_monitoring_app/features/dashboard/bloc/dashboard_state.dart';
-import '../../../data/repositories/vehicle_repository.dart';
-
-
-
+import 'package:iot_fuel/data/repositories/fuel_record_repository.dart';
+import 'package:iot_fuel/features/dashboard/bloc/dashboard_event.dart';
+import 'package:iot_fuel/features/dashboard/bloc/dashboard_state.dart';
+import 'package:iot_fuel/data/repositories/vehicle_repository.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final VehicleRepository _vehicleRepository;
@@ -40,6 +37,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         limit: _pageSize,
       );
 
+      if (vehicleResult.vehicles.isEmpty) {
+        emit(const DashboardEmpty());
+        return;
+      }
+
       _lastVehicleDocument = vehicleResult.lastDocument;
       final vehicles = vehicleResult.vehicles;
 
@@ -50,6 +52,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           await _fuelRecordRepository.getRecentFuelRecords(
         limit: _pageSize,
       );
+
+      if (fuelRecordResult.records.isEmpty) {
+        emit(const DashboardEmpty());
+        return;
+      }
 
       _lastFuelRecordDocument = fuelRecordResult.lastDocument;
       final recentFuelRecords = fuelRecordResult.records;
@@ -63,7 +70,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         lastUpdated: DateTime.now(),
       ));
     } catch (e) {
-      emit(DashboardError(e.toString()));
+      emit(DashboardError('Failed to load dashboard: $e'));
     }
   }
 
@@ -79,6 +86,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         limit: _pageSize,
       );
 
+      if (vehicleResult.vehicles.isEmpty) {
+        emit(const DashboardEmpty());
+        return;
+      }
+
       _lastVehicleDocument = vehicleResult.lastDocument;
       final vehicles = vehicleResult.vehicles;
 
@@ -89,6 +101,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           await _fuelRecordRepository.getRecentFuelRecords(
         limit: _pageSize,
       );
+
+      if (fuelRecordResult.records.isEmpty) {
+        emit(const DashboardEmpty());
+        return;
+      }
 
       _lastFuelRecordDocument = fuelRecordResult.lastDocument;
       final recentFuelRecords = fuelRecordResult.records;
@@ -102,7 +119,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         lastUpdated: DateTime.now(),
       ));
     } catch (e) {
-      emit(DashboardError(e.toString()));
+      emit(DashboardError('Failed to refresh dashboard: $e'));
     }
   }
 
@@ -123,6 +140,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         startAfter: _lastVehicleDocument,
       );
 
+      if (vehicleResult.vehicles.isEmpty) {
+        emit(currentState.copyWith(isLoadingMore: false));
+        return;
+      }
+
       _lastVehicleDocument = vehicleResult.lastDocument;
       final moreVehicles = vehicleResult.vehicles;
 
@@ -132,7 +154,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         isLoadingMore: false,
       ));
     } catch (e) {
-      emit(DashboardError(e.toString()));
+      emit(DashboardError('Failed to load more vehicles: $e'));
     }
   }
 
@@ -153,6 +175,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         startAfter: _lastFuelRecordDocument,
       );
 
+      if (fuelRecordResult.records.isEmpty) {
+        emit(currentState.copyWith(isLoadingMore: false));
+        return;
+      }
+
       _lastFuelRecordDocument = fuelRecordResult.lastDocument;
       final moreRecords = fuelRecordResult.records;
 
@@ -162,7 +189,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         isLoadingMore: false,
       ));
     } catch (e) {
-      emit(DashboardError(e.toString()));
+      emit(DashboardError('Failed to load more fuel records: $e'));
     }
   }
 
@@ -182,8 +209,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         lastUpdated: DateTime.now(),
       ));
     } catch (e) {
-      emit(DashboardError(e.toString()));
+      emit(DashboardError('Failed to update dashboard stats: $e'));
     }
   }
 }
-

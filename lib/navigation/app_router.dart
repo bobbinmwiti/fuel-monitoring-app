@@ -1,7 +1,7 @@
 // lib/navigation/app_router.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fuel_monitoring_app/features/vehicle/screens/vehicle_details_screen.dart';
+import 'package:iot_fuel/features/vehicle/screens/vehicle_details_screen.dart';
 import '../features/auth/screens/login_screen.dart';
 import '../features/auth/screens/signup_screen.dart';
 import '../features/auth/screens/email_verification_screen.dart';

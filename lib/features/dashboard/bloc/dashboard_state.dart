@@ -69,6 +69,13 @@ class DashboardLoaded extends DashboardState {
   }
 }
 
+class DashboardEmpty extends DashboardState {
+  const DashboardEmpty();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class DashboardError extends DashboardState {
   final String message;
 

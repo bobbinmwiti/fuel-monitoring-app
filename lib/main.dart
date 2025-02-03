@@ -2,16 +2,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'core/theme/app_colors.dart';
+import 'core/di/service_locator.dart';
 import 'data/repositories/user_repository.dart';
 import 'data/repositories/vehicle_repository.dart';
 import 'data/repositories/fuel_record_repository.dart';
-import 'features/auth/bloc/auth_bloc.dart';
+import 'package:iot_fuel/features/auth/bloc/auth_bloc.dart';
 import 'navigation/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await setupServiceLocator(); // Initialize services
   runApp(const MyApp());
 }
 

@@ -1,6 +1,6 @@
 // lib/core/constants/api_endpoints.dart
 class ApiEndpoints {
-  static const String baseUrl = 'your-api-base-url';
+  static const String baseUrl = 'https://api.example.com'; // Update the baseUrl to the actual API base URL
 
   // Auth Endpoints
   static const String login = '/auth/login';

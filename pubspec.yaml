@@ -1,4 +1,4 @@
-name: fuel_monitoring_app
+name: iot_fuel
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: '>=3.2.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,7 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+  path: ^1.8.0
+  # Add other dependencies as needed
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
@@ -40,47 +42,66 @@ dependencies:
   firebase_auth: ^4.15.3
   cloud_firestore: ^4.13.6
   firebase_storage: ^11.5.6
+  firebase_auth_web: ^5.8.12
+  firebase_core_web: ^2.10.0
 
    # State Management
-  flutter_bloc: ^8.1.3
+  flutter_bloc: ^9.0.0
   equatable: ^2.0.5
 
   # UI Components
   google_fonts: ^6.1.0
-  fl_chart: ^0.65.0
+  fl_chart: ^0.70.2
   flutter_svg: ^2.0.9
   cached_network_image: ^3.3.0
   shimmer: ^3.0.0 
-  lottie: ^2.7.0
+  lottie: ^3.1.3
   flutter_animate: ^4.3.0
  
    # Utilities
-   # Add this under UI Components or create a new section called Utilities
-  intl: ^0.19.0  # Add this line
-  get_it: ^7.6.4
+  intl: ^0.20.1
+  get_it: ^8.0.3
   injectable: ^2.3.2
   logger: ^2.0.2+1
-  shared_preferences: ^2.2.2
+  shared_preferences: ^2.3.3
   json_annotation: ^4.8.1
+  
+  # Location and Maps
+  geolocator: ^10.1.0
+  google_maps_flutter: ^2.5.0
+  
+  # PDF Generation
+  pdf: ^3.10.7
+  printing: ^5.11.1
+  
+  # Notifications
+  flutter_local_notifications: ^16.3.0
+  timezone: ^0.9.2
 
   # Database
-  drift: ^2.13.1
-  sqlite3_flutter_libs: ^0.5.18
-  path_provider: ^2.0.15
-  path: ^1.8.3
+  drift: ^2.14.0
+  sqlite3_flutter_libs: ^0.5.0
+  path_provider: ^2.1.1
+  uuid: ^4.5.1
+  logging: ^1.2.0
+  mqtt_client: ^9.8.1  # Add this line for MQTT support
+
+  # your_package_name:
+  #   path: ../path_to_your_package
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   # Code Generation
-  build_runner: ^2.4.7
+  build_runner: ^2.4.6
+  drift_dev: ^2.14.0
   json_serializable: ^6.7.1
-  injectable_generator: ^2.4.1  
-  drift_dev: ^2.13.2
+  injectable_generator: ^2.6.2  
+  
 
    # Testing
-  bloc_test: ^9.1.5
+  bloc_test: ^10.0.0
   mocktail: ^1.0.0
 
 
@@ -89,7 +110,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
+  flutter_lints: ^3.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
