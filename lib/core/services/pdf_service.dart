@@ -5,60 +5,67 @@ import 'package:intl/intl.dart';
 import '../../data/models/vehicle.dart';
 import '../../data/models/driver.dart';
 import '../../data/models/fuel_transaction.dart';
+import 'package:logger/logger.dart';
 
 class PdfService {
+  final Logger logger = Logger();
+
   Future<void> generateFuelReport({
     required List<FuelTransaction> transactions,
     required Vehicle vehicle,
     required Driver driver,
   }) async {
-    final pdf = pw.Document();
+    try {
+      final pdf = pw.Document();
 
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        build: (context) => [
-          pw.Header(
-            level: 0,
-            child: pw.Text('Fuel Transaction Report'),
-          ),
-          pw.SizedBox(height: 20),
-          pw.Table(
-            border: pw.TableBorder.all(),
-            children: [
-              pw.TableRow(
-                children: [
-                  'Date',
-                  'Amount (L)',
-                  'Cost',
-                  'Station',
-                  'Status',
-                ].map((header) => pw.Container(
-                  padding: const pw.EdgeInsets.all(8),
-                  child: pw.Text(header, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                )).toList(),
-              ),
-              ...transactions.map(
-                (transaction) => pw.TableRow(
+      pdf.addPage(
+        pw.MultiPage(
+          pageFormat: PdfPageFormat.a4,
+          build: (context) => [
+            pw.Header(
+              level: 0,
+              child: pw.Text('Fuel Transaction Report'),
+            ),
+            pw.SizedBox(height: 20),
+            pw.Table(
+              border: pw.TableBorder.all(),
+              children: [
+                pw.TableRow(
                   children: [
-                    DateFormat('dd/MM/yyyy').format(transaction.timestamp),
-                    transaction.amount.toStringAsFixed(2),
-                    transaction.cost.toStringAsFixed(2),
-                    transaction.stationName,
-                    transaction.status,
-                  ].map((cell) => pw.Container(
+                    'Date',
+                    'Amount (L)',
+                    'Cost',
+                    'Station',
+                    'Status',
+                  ].map((header) => pw.Container(
                     padding: const pw.EdgeInsets.all(8),
-                    child: pw.Text(cell.toString()),
+                    child: pw.Text(header, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                   )).toList(),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+                ...transactions.map(
+                  (transaction) => pw.TableRow(
+                    children: [
+                      DateFormat('dd/MM/yyyy').format(transaction.timestamp),
+                      transaction.amount.toStringAsFixed(2),
+                      transaction.cost.toStringAsFixed(2),
+                      transaction.stationName,
+                      transaction.status,
+                    ].map((cell) => pw.Container(
+                      padding: const pw.EdgeInsets.all(8),
+                      child: pw.Text(cell.toString()),
+                    )).toList(),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
 
-    await Printing.sharePdf(bytes: await pdf.save(), filename: 'fuel_report.pdf');
+      await Printing.sharePdf(bytes: await pdf.save(), filename: 'fuel_report.pdf');
+    } catch (e) {
+      logger.e('Error generating PDF: $e');
+    }
   }
 
   Future<void> generateVehicleReport({

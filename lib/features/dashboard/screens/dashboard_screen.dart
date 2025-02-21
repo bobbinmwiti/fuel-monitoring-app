@@ -112,7 +112,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               return CustomScrollView(
                 controller: _scrollController,
                 slivers: [
-                  // App Bar
                   SliverAppBar(
                     expandedHeight: 120,
                     floating: true,
@@ -131,12 +130,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ),
 
-                  // Content
                   SliverPadding(
                     padding: const EdgeInsets.all(16),
                     sliver: SliverList(
                       delegate: SliverChildListDelegate([
-                        // Vehicles Needing Refuel
                         if (state.vehiclesNeedingRefuel.isNotEmpty) ...[
                           Text(
                             'Vehicles Needing Refuel',
@@ -173,7 +170,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           const SizedBox(height: 24),
                         ],
 
-                        // Fuel Summary
                         FuelSummaryCard(
                           fuelRecords: state.recentFuelRecords,
                           startDate: DateTime.now().subtract(const Duration(days: 30)),
@@ -181,7 +177,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                         const SizedBox(height: 24),
 
-                        // Recent Records Header
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -199,7 +194,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                         const SizedBox(height: 16),
 
-                        // Recent Records List
                         ...state.recentFuelRecords.map((record) {
                           final vehicle = state.vehicles.firstWhere(
                             (v) => v.id == record.vehicleId,
@@ -211,7 +205,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 leading: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primary.withOpacity(0.1),
+                                    color: AppColors.primary.withAlpha(25), // 0.1 opacity
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: const Icon(
@@ -234,7 +228,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           );
                         }),
 
-                        // Loading More Indicator
                         if (state.isLoadingMore) ...[
                           const SizedBox(height: 16),
                           const Center(child: CircularProgressIndicator()),

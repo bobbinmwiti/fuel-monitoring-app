@@ -11,6 +11,7 @@ import '../features/vehicle/screens/vehicle_list_screen.dart';
 import '../features/vehicle/bloc/vehicle_bloc.dart';
 import '../data/repositories/vehicle_repository.dart';
 import '../data/repositories/fuel_record_repository.dart';
+import '../features/auth/screens/error_screen.dart'; // Import the new ErrorScreen class
 
 class AppRouter {
   // Route names
@@ -37,10 +38,12 @@ class AppRouter {
 
       case verifyEmail:
         if (settings.arguments is! String) {
-          return _errorRoute('Email argument is required');
+          return MaterialPageRoute(
+            builder: (_) => const ErrorScreen(), // Use the new ErrorScreen class
+          );
         }
         return MaterialPageRoute(
-          builder: (_) => EmailVerificationScreen(
+          builder: (_) => EmailVerificationScreen( // Use the new EmailVerificationScreen class
             email: settings.arguments as String,
           ),
         );
@@ -77,7 +80,9 @@ class AppRouter {
 
       case vehicleDetails:
         if (settings.arguments is! String) {
-          return _errorRoute('Vehicle ID is required');
+          return MaterialPageRoute(
+            builder: (_) => const ErrorScreen(), // Use the new ErrorScreen class
+          );
         }
         return MaterialPageRoute(
           builder: (context) => BlocProvider(

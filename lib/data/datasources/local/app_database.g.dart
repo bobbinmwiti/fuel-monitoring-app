@@ -689,7 +689,7 @@ final class $$UsersTableReferences
 
   $$FuelRecordsTableProcessedTableManager get fuelRecordsRefs {
     final manager = $$FuelRecordsTableTableManager($_db, $_db.fuelRecords)
-        .filter((f) => f.userId.id($_item.id));
+        .filter((f) => f.userId.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_fuelRecordsRefsTable($_db));
     return ProcessedTableManager(
@@ -866,7 +866,7 @@ class $$UsersTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (fuelRecordsRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<User, $UsersTable, FuelRecord>(
                         currentTable: table,
                         referencedTable:
                             $$UsersTableReferences._fuelRecordsRefsTable(db),
@@ -927,9 +927,10 @@ final class $$FuelRecordsTableReferences
       .createAlias($_aliasNameGenerator(db.fuelRecords.userId, db.users.id));
 
   $$UsersTableProcessedTableManager? get userId {
-    if ($_item.userId == null) return null;
+    final $_column = $_itemColumn<String>('user_id');
+    if ($_column == null) return null;
     final manager = $$UsersTableTableManager($_db, $_db.users)
-        .filter((f) => f.id($_item.userId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_userIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(

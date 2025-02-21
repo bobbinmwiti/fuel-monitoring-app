@@ -15,8 +15,15 @@ class FleetManagementService {
   }
 
   Future<Vehicle> getVehicleById(String id) async {
-    final doc = await _firestore.collection('vehicles').doc(id).get();
-    return Vehicle.fromJson(doc.data()!);
+    try {
+      final doc = await _firestore.collection('vehicles').doc(id).get();
+      if (!doc.exists) {
+        throw Exception('Vehicle not found');
+      }
+      return Vehicle.fromJson(doc.data()!);
+    } catch (e) {
+      throw Exception('Failed to get vehicle by id: $e');
+    }
   }
 
   Stream<List<Vehicle>> getVehiclesStream() {

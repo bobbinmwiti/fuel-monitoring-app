@@ -97,19 +97,12 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Vehicle Info Card
           _buildVehicleInfo(),
           const SizedBox(height: 24),
-
-          // Fuel Details
           _buildFuelDetails(),
           const SizedBox(height: 24),
-
-          // Additional Details
           _buildAdditionalDetails(),
           const SizedBox(height: 24),
-
-          // Submit Button
           CustomButton(
             text: 'Save Record',
             onPressed: _submitForm,
@@ -128,7 +121,7 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.1),
+            color: AppColors.primary.withAlpha(25),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -141,7 +134,7 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withAlpha(25),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
@@ -187,7 +180,7 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.1),
+            color: AppColors.primary.withAlpha(25),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -201,8 +194,6 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
             style: AppTextStyles.titleLarge,
           ),
           const SizedBox(height: 16),
-
-          // Fuel Amount
           TextFormField(
             controller: _fuelAmountController,
             decoration: const InputDecoration(
@@ -217,8 +208,6 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 16),
-
-          // Cost per Liter
           TextFormField(
             controller: _costPerLiterController,
             decoration: const InputDecoration(
@@ -233,12 +222,10 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 16),
-
-          // Total Cost Display
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withAlpha(25),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
@@ -270,7 +257,7 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.1),
+            color: AppColors.primary.withAlpha(25),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -284,8 +271,6 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
             style: AppTextStyles.titleLarge,
           ),
           const SizedBox(height: 16),
-
-          // Odometer Reading
           TextFormField(
             controller: _odometerController,
             decoration: const InputDecoration(
@@ -297,8 +282,6 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
             validator: Validators.validateMileage,
           ),
           const SizedBox(height: 16),
-
-          // Date Picker
           InkWell(
             onTap: () => _selectDate(context),
             child: InputDecorator(
@@ -313,8 +296,6 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
             ),
           ),
           const SizedBox(height: 16),
-
-          // Location
           TextFormField(
             controller: _locationController,
             decoration: const InputDecoration(
@@ -323,8 +304,6 @@ class _FuelEntryFormState extends State<FuelEntryForm> {
             ),
           ),
           const SizedBox(height: 16),
-
-          // Notes
           TextFormField(
             controller: _notesController,
             decoration: const InputDecoration(

@@ -70,7 +70,7 @@ class _FuelEntryScreenState extends State<FuelEntryScreen> {
       final fuelRecord = FuelRecordModel(
         id: const Uuid().v4(),
         vehicleId: widget.vehicle.id,
-        userId: user.uid,  // Using the authenticated user's ID
+        userId: user.uid,
         fuelAmount: double.parse(_fuelAmountController.text),
         costPerLiter: double.parse(_costPerLiterController.text),
         totalCost: _totalCost,
@@ -154,7 +154,7 @@ class _FuelEntryScreenState extends State<FuelEntryScreen> {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: AppColors.primary.withOpacity(0.1),
+                              color: AppColors.primary.withAlpha(25), // 10% opacity
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Icon(
@@ -195,7 +195,6 @@ class _FuelEntryScreenState extends State<FuelEntryScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Fuel Amount
                       TextFormField(
                         controller: _fuelAmountController,
                         decoration: const InputDecoration(
@@ -208,7 +207,6 @@ class _FuelEntryScreenState extends State<FuelEntryScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Cost per Liter
                       TextFormField(
                         controller: _costPerLiterController,
                         decoration: const InputDecoration(
@@ -221,11 +219,10 @@ class _FuelEntryScreenState extends State<FuelEntryScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Total Cost Display
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.1),
+                          color: AppColors.primary.withAlpha(25), // 10% opacity
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Row(
@@ -246,7 +243,6 @@ class _FuelEntryScreenState extends State<FuelEntryScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Odometer Reading
                       TextFormField(
                         controller: _odometerController,
                         decoration: const InputDecoration(
@@ -258,7 +254,6 @@ class _FuelEntryScreenState extends State<FuelEntryScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Date Picker
                       InkWell(
                         onTap: () => _selectDate(context),
                         child: InputDecorator(
@@ -274,7 +269,6 @@ class _FuelEntryScreenState extends State<FuelEntryScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Location
                       TextFormField(
                         controller: _locationController,
                         decoration: const InputDecoration(
@@ -284,7 +278,6 @@ class _FuelEntryScreenState extends State<FuelEntryScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Notes
                       TextFormField(
                         controller: _notesController,
                         decoration: const InputDecoration(

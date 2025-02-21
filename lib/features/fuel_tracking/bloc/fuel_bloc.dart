@@ -107,6 +107,8 @@ class FuelBloc extends Bloc<FuelEvent, FuelState> {
       if (state is FuelLoaded) {
         final loadedState = state as FuelLoaded;
         add(LoadFuelRecords(vehicleId: loadedState.vehicleId));
+      } else if (state is FuelInitial) {
+        add(const LoadFuelRecords());
       }
     } catch (e) {
       emit(FuelOperationFailure(e.toString()));
@@ -128,6 +130,8 @@ class FuelBloc extends Bloc<FuelEvent, FuelState> {
       if (state is FuelLoaded) {
         final loadedState = state as FuelLoaded;
         add(LoadFuelRecords(vehicleId: loadedState.vehicleId));
+      } else if (state is FuelInitial) {
+        add(const LoadFuelRecords());
       }
     } catch (e) {
       emit(FuelOperationFailure(e.toString()));
@@ -146,6 +150,8 @@ class FuelBloc extends Bloc<FuelEvent, FuelState> {
       if (state is FuelLoaded) {
         final loadedState = state as FuelLoaded;
         add(LoadFuelRecords(vehicleId: loadedState.vehicleId));
+      } else if (state is FuelInitial) {
+        add(const LoadFuelRecords());
       }
     } catch (e) {
       emit(FuelOperationFailure(e.toString()));
@@ -186,6 +192,25 @@ class FuelBloc extends Bloc<FuelEvent, FuelState> {
       ));
     } catch (e) {
       emit(FuelError(e.toString()));
+    }
+  }
+
+  @override
+  void onTransition(Transition<FuelEvent, FuelState> transition) {
+    super.onTransition(transition);
+    // Add state handling logic here
+    if (transition.event is LoadFuelRecords) {
+      // Handle LoadFuelRecords event
+    } else if (transition.event is LoadMoreFuelRecords) {
+      // Handle LoadMoreFuelRecords event
+    } else if (transition.event is AddFuelRecord) {
+      // Handle AddFuelRecord event
+    } else if (transition.event is UpdateFuelRecord) {
+      // Handle UpdateFuelRecord event
+    } else if (transition.event is DeleteFuelRecord) {
+      // Handle DeleteFuelRecord event
+    } else if (transition.event is RefreshFuelRecords) {
+      // Handle RefreshFuelRecords event
     }
   }
 }

@@ -36,7 +36,7 @@ class StatsCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: (color ?? AppColors.primary).withOpacity(0.1),
+                  color: (color ?? AppColors.primary).withAlpha(25), // 10% opacity
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
@@ -88,7 +88,7 @@ class StatsCard extends StatelessWidget {
       children: [
         Row(
           children: [
-            _buildStatItem(
+            StatsCard._buildStatItem(
               'Fuel Level',
               Formatters.formatPercentage(
                 (vehicle.currentFuelLevel / vehicle.fuelCapacity) * 100,
@@ -96,7 +96,7 @@ class StatsCard extends StatelessWidget {
               Icons.local_gas_station,
             ),
             const SizedBox(width: 16),
-            _buildStatItem(
+            StatsCard._buildStatItem(
               'Total Fuel',
               Formatters.formatFuelVolume(totalFuel),
               Icons.opacity,
@@ -106,13 +106,13 @@ class StatsCard extends StatelessWidget {
         const SizedBox(height: 12),
         Row(
           children: [
-            _buildStatItem(
+            StatsCard._buildStatItem(
               'Total Cost',
               Formatters.formatCurrency(totalCost),
               Icons.payments,
             ),
             const SizedBox(width: 16),
-            _buildStatItem(
+            StatsCard._buildStatItem(
               'Records',
               fuelRecords.length.toString(),
               Icons.receipt_long,
@@ -144,13 +144,13 @@ class StatsCard extends StatelessWidget {
       children: [
         Row(
           children: [
-            _buildStatItem(
+            StatsCard._buildStatItem(
               'Avg Efficiency',
               Formatters.formatFuelEfficiency(averageEfficiency),
               Icons.trending_up,
             ),
             const SizedBox(width: 16),
-            _buildStatItem(
+            StatsCard._buildStatItem(
               'Records',
               fuelRecords.length.toString(),
               Icons.receipt_long,
@@ -166,7 +166,7 @@ class StatsCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: AppColors.background.withAlpha(127), // 50% opacity
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(

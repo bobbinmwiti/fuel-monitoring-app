@@ -21,6 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+  bool _isSigningUp = false;
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +168,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         builder: (context, state) {
                           return CustomButton(
                             text: 'Create Account',
-                            isLoading: state is AuthLoading,
+                            isLoading: state is AuthLoading || _isSigningUp,
                             onPressed: _handleSignup,
                           );
                         },
@@ -205,12 +206,21 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void _handleSignup() {
     if (_formKey.currentState?.validate() ?? false) {
+      setState(() {
+        _isSigningUp = true;
+      });
       context.read<AuthBloc>().add(
         SignUpRequested(
           name: _nameController.text,
           email: _emailController.text,
           password: _passwordController.text,
         ),
+      );
+      setState(() {
+        _isSigningUp = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Signup successful')),
       );
     }
   }

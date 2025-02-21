@@ -18,17 +18,27 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isAuthenticated = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+        if (state is AuthLoading) {
+          setState(() {
+            _isLoading = true;
+          });
         } else if (state is AuthAuthenticated) {
+          _isAuthenticated = true;
           Navigator.pushReplacementNamed(context, '/dashboard');
+        } else if (state is AuthError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Authentication failed. Please try again.')),
+          );
+          setState(() {
+            _isLoading = false;
+          });
         }
       },
       child: Scaffold(
@@ -106,9 +116,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
                           return CustomButton(
-                            text: 'Login',
-                            isLoading: state is AuthLoading,
-                            onPressed: _handleLogin,
+                            text: _isAuthenticated ? 'Logged In' : 'Login',
+                            isLoading: _isLoading,
+                            onPressed: _isAuthenticated ? null : _handleLogin,
                           );
                         },
                       ),

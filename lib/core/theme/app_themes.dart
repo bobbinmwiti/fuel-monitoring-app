@@ -52,7 +52,7 @@ class AppThemes {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.2)),
+          borderSide: BorderSide(color: AppColors.primary.withAlpha(51)), // Replaced withOpacity with withAlpha
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

@@ -138,18 +138,15 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Real-time Fuel Monitor
                     RealTimeFuelMonitor(vehicleId: widget.vehicleId),
                     const SizedBox(height: 16),
 
-                    // Vehicle Card
                     VehicleCard(
                       vehicle: vehicle,
                       showActions: false,
                     ),
                     const SizedBox(height: 24),
 
-                    // Vehicle Details
                     CustomCard(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +173,6 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Maintenance Info
                     if (vehicle.lastMaintenance != null) ...[
                       CustomCard(
                         child: Column(
@@ -197,14 +193,12 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
                       const SizedBox(height: 24),
                     ],
 
-                    // Actions
                     Row(
                       children: [
                         Expanded(
                           child: CustomButton(
                             text: 'Add Fuel Record',
                             onPressed: () {
-                              // Navigate to add fuel record screen
                               Navigator.pushNamed(
                                 context,
                                 '/add-fuel-record',
@@ -217,7 +211,6 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
                         CustomButton(
                           text: 'View History',
                           onPressed: () {
-                            // Navigate to fuel history screen
                             Navigator.pushNamed(
                               context,
                               '/fuel-history',
@@ -233,7 +226,7 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
                       text: 'Delete Vehicle',
                       onPressed: () => _confirmDelete(context, vehicle.name),
                       isOutlined: true,
-                      backgroundColor: AppColors.error.withOpacity(0.1),
+                      backgroundColor: AppColors.error.withAlpha(25),
                     ),
                   ],
                 ),

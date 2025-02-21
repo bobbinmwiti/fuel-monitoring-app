@@ -1,5 +1,4 @@
 // lib/features/dashboard/widgets/fuel_summary_card.dart
-
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/text_styles.dart';
@@ -11,12 +10,14 @@ class FuelSummaryCard extends StatelessWidget {
   final List<FuelRecordModel> fuelRecords;
   final DateTime startDate;
   final DateTime endDate;
+  final VoidCallback? onTap;
 
   const FuelSummaryCard({
     super.key,
     required this.fuelRecords,
     required this.startDate,
     required this.endDate,
+    this.onTap,
   });
 
   @override
@@ -36,6 +37,7 @@ class FuelSummaryCard extends StatelessWidget {
         : totalCost / fuelRecords.length;
 
     return CustomCard(
+      onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,7 +46,7 @@ class FuelSummaryCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withAlpha(25), // 0.1 opacity (255 * 0.1 ≈ 25)
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(

@@ -33,7 +33,7 @@ class VehicleCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withAlpha(25), // 10% opacity (0.1 * 255)
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
@@ -121,7 +121,7 @@ class VehicleCard extends StatelessWidget {
           const SizedBox(height: 12),
           LinearProgressIndicator(
             value: vehicle.currentFuelLevel / vehicle.fuelCapacity,
-            backgroundColor: AppColors.textSecondary.withOpacity(0.1),
+            backgroundColor: AppColors.textSecondary.withAlpha(25), // 10% opacity
             valueColor: AlwaysStoppedAnimation<Color>(_getFuelLevelColor()),
           ),
         ],
@@ -188,14 +188,17 @@ class VehicleCard extends StatelessWidget {
           ),
           TextButton(
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () {
+              Navigator.pop(context, true);
+              onDelete?.call();
+            },
             child: const Text('Delete'),
           ),
         ],
       ),
     );
 
-    if (confirmed == true) {
+    if (confirmed ?? false) {
       onDelete?.call();
     }
   }

@@ -9,20 +9,17 @@ buildscript {
     }
 }
 
-allprojects {
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-    }
-}
-
 ext {
-    javaHome = "C:/Program Files/Java/jdk-17.0.2"
+    kotlin_version = '1.6.0'
 }
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     }
 }
 

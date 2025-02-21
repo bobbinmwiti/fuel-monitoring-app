@@ -183,7 +183,7 @@ class _FuelHistoryScreenState extends State<FuelHistoryScreen> {
                                   Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: AppColors.primary.withOpacity(0.1),
+                                      color: AppColors.primary.withAlpha(25), // 10% opacity
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: const Icon(

@@ -91,7 +91,12 @@ class CustomButton extends StatelessWidget {
     if (isLoading) {
       return isOutlined 
           ? Colors.transparent 
-          : (backgroundColor ?? AppColors.primary).withOpacity(0.7);
+          : (backgroundColor ?? AppColors.primary).withValues(
+              red: (backgroundColor ?? AppColors.primary).r,
+              green: (backgroundColor ?? AppColors.primary).g,
+              blue: (backgroundColor ?? AppColors.primary).b,
+              alpha: 0.7 * 255.0
+            );
     }
     if (isOutlined) {
       return Colors.transparent;
